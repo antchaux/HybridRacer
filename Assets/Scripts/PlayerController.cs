@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class PlayerController : MonoBehaviour {
 	private Rigidbody2D rb;
 	private float moveInput;
-	public float roadOffset;
+	private float newX;
+	public float roadOffset = 0.7f;
 
 	void Start () {
 		rb = GetComponent<Rigidbody2D>();
@@ -13,13 +13,16 @@ public class PlayerController : MonoBehaviour {
 
 	void Update(){
 		moveInput = Input.GetAxisRaw("Horizontal");
+		newX = rb.position.x + moveInput * (1 + roadOffset);
+		if(Mathf.Round(newX) == 0) newX = 0;
+
 		if(Input.GetKeyDown(KeyCode.LeftArrow) && rb.position.x >= 0){
-			Debug.Log(moveInput);
-			rb.position = new Vector2(rb.position.x + moveInput - roadOffset, rb.position.y);
+			Debug.Log(newX);
+			rb.position = new Vector2(newX, rb.position.y);
 		}
 		else if(Input.GetKeyDown(KeyCode.RightArrow) && rb.position.x <= 0){
-			Debug.Log(moveInput);
-			rb.position = new Vector2(rb.position.x + moveInput + roadOffset, rb.position.y);
+			Debug.Log(newX);
+			rb.position = new Vector2(newX, rb.position.y);
 		}
 	}
 }
