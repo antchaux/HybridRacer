@@ -25,4 +25,10 @@ public class PlayerController : MonoBehaviour {
 			rb.position = new Vector2(newX, rb.position.y);
 		}
 	}
+
+	void OnCollisionEnter2D(Collision2D col){
+		if(col.gameObject.tag == "Enemy Car"){
+			Destroy(gameObject);
+		}
+	}
 }
