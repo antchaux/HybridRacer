@@ -8,11 +8,9 @@ public class PlayerController : MonoBehaviour {
 	public float leftPosition = -1.7f;
 	public float rightPosition = 1.7f;
 	public float roadOffset = 0.7f;
-	private float startY;
 
 	void Start () {
 		rb = GetComponent<Rigidbody2D>();
-		startY = rb.position.y;
 	}
 
 	void Update(){
@@ -30,23 +28,23 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	void moveCar(){ //TODO fix issue of car not on the right place when moving
-		Debug.Log(rb.position);
+		//Debug.Log(rb.position);
 		moveInput = Input.GetAxisRaw("Horizontal");
 
 		if(Input.GetKeyDown(KeyCode.LeftArrow) && rb.position.x >= 0){
 			if(rb.position.x == rightPosition){
-				rb.position = new Vector2(0f, startY);
+				rb.position = new Vector2(0f, rb.position.y);
 			}
 			else{
-				rb.position = new Vector2(leftPosition, startY);
+				rb.position = new Vector2(leftPosition, rb.position.y);
 			}
 		}
 		else if(Input.GetKeyDown(KeyCode.RightArrow) && rb.position.x <= 0){
 			if(rb.position.x == leftPosition){
-				rb.position = new Vector2(0f, startY);
+				rb.position = new Vector2(0f, rb.position.y);
 			}
 			else{
-				rb.position = new Vector2(rightPosition, startY);
+				rb.position = new Vector2(rightPosition, rb.position.y);
 			}
 		}
 	}

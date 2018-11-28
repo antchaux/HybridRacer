@@ -20,7 +20,7 @@ public class ObjectSpawner : MonoBehaviour {
 	}
 
 	void SpawnObject(){
-		int getOilChances = 1;//(int) oil.value; //TODO improve logic of spawing oil cans
+		int getOilChances = (int) oil.value; //TODO improve logic of spawing oil cans
 		if(Random.Range(0, getOilChances) == 0){
 			SpawnObject(energies);
 		}

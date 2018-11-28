@@ -346,6 +346,7 @@ GameObject:
   - component: {fileID: 164463310}
   - component: {fileID: 164463309}
   - component: {fileID: 164463311}
+  - component: {fileID: 164463312}
   m_Layer: 0
   m_Name: destroyer
   m_TagString: Untagged
@@ -402,6 +403,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe0d015df4e9c1348920e5f22b1620a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!50 &164463312
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 164463308}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!1 &175456410
 GameObject:
   m_ObjectHideFlags: 0
@@ -636,7 +657,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4518371230247916, guid: 66e86d8c5ae1ff94e8c1045933bff1ff, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -2.41
+      value: -2.4
       objectReference: {fileID: 0}
     - target: {fileID: 4518371230247916, guid: 66e86d8c5ae1ff94e8c1045933bff1ff, type: 2}
       propertyPath: m_LocalPosition.z
@@ -672,25 +693,35 @@ Prefab:
       propertyPath: electricity
       value: 
       objectReference: {fileID: 2033830038}
-    - target: {fileID: 50961110502833122, guid: 66e86d8c5ae1ff94e8c1045933bff1ff,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: m_Mass
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 50961110502833122, guid: 66e86d8c5ae1ff94e8c1045933bff1ff,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: m_AngularDrag
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 50961110502833122, guid: 66e86d8c5ae1ff94e8c1045933bff1ff,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: m_Simulated
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 50961110502833122, guid: 66e86d8c5ae1ff94e8c1045933bff1ff,
-        type: 2}
+    - target: {fileID: 0}
       propertyPath: m_BodyType
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 61006298094421262, guid: 66e86d8c5ae1ff94e8c1045933bff1ff,
+        type: 2}
+      propertyPath: m_Offset.x
+      value: -0.009691477
+      objectReference: {fileID: 0}
+    - target: {fileID: 61006298094421262, guid: 66e86d8c5ae1ff94e8c1045933bff1ff,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 1.1188152
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 66e86d8c5ae1ff94e8c1045933bff1ff, type: 2}
@@ -1115,7 +1146,7 @@ MonoBehaviour:
   - {fileID: 1380471571643108, guid: 5a356ab29ca68e74496705f1d2fcd0bd, type: 2}
   - {fileID: 1870402303229050, guid: 52a1aa50145e2ff4ba195f882a7d6b2d, type: 2}
   energies:
-  - {fileID: 1960948396743422, guid: a05cfa3ba73b361409003eec943ab94d, type: 2}
+  - {fileID: 1005589149336850, guid: a05cfa3ba73b361409003eec943ab94d, type: 2}
   offset: 0.7
   delayTimer: 0.5
   oil: {fileID: 1274590772}

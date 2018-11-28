@@ -22,8 +22,8 @@ GameObject:
   - component: {fileID: 212900383118236670}
   - component: {fileID: 114137966835296638}
   - component: {fileID: 114632782927038784}
-  - component: {fileID: 50961110502833122}
   - component: {fileID: 61006298094421262}
+  - component: {fileID: 50838501028106704}
   m_Layer: 0
   m_Name: PlayerCar
   m_TagString: Player Car
@@ -44,7 +44,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &50961110502833122
+--- !u!50 &50838501028106704
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 1
@@ -57,13 +57,13 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 6
 --- !u!61 &61006298094421262
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -100,6 +100,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3061da1eb5d47fd46880a21fac1f5f76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leftPosition: -1.7
+  rightPosition: 1.7
   roadOffset: 0.7
 --- !u!114 &114632782927038784
 MonoBehaviour:
@@ -113,8 +115,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   oil: {fileID: 0}
-  maxOilvalue: 100
-  oilRefillvalue: 25
+  electricity: {fileID: 0}
+  maxOilValue: 100
+  maxElectricityValue: 100
+  oilRefillValue: 25
 --- !u!212 &212900383118236670
 SpriteRenderer:
   m_ObjectHideFlags: 1
