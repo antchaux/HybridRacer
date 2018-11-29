@@ -15,8 +15,9 @@ public class ObjectController : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D col){
-		if(tag == "Oil"){
-			Destroy(gameObject);
+		if(col.gameObject.tag == "Player Car"){
+			FindObjectOfType<EnergyController>().RefillOil();
 		}
+		Destroy(gameObject);
 	}
 }

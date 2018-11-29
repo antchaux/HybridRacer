@@ -4,51 +4,61 @@ using UnityEngine;
 using UnityEngine.UI;
 public class EnergyController : MonoBehaviour {
 
-	public Slider oil;
-	public Slider electricity;
-	public int maxOilValue = 100;
-	public int maxElectricityValue = 100;
-	public int oilRefillValue = 25;
-	bool usingOil = true;
-	bool transformOil = false;
+	//public Slider oil;
+	//public Slider electricity;
+	//public int maxOilValue = 10;
+	public Image[] OilImage;
+	public Image[] ElecImage;
+	//public int maxElectricityValue = 100;
+	public int oilRefillValue;
+	int oilValue;
+	int elecValue;
+	bool usingOil;
 
 	void Start(){
-		oil.value = maxOilValue;
-		electricity.value = maxElectricityValue;
-		InvokeRepeating("DecreaseOil", 1.0f, 0.5f);
+		oilValue = OilImage.Length - 1;
+		elecValue = ElecImage.Length - 1;
+		for(int i = 0; i < OilImage.Length; i++){
+			OilImage[i].enabled = true;
+		}
+
+		usingOil = true;
+
+		InvokeRepeating("DecreaseOil", 2.0f, 2.0f);
 	}
 
 	void Update(){
 		// Use Oil
-		if(Input.GetKey(KeyCode.A) && !usingOil){
+		if(Input.GetKeyDown(KeyCode.A) && !usingOil){
 			CancelInvoke("DecreaseElectricity");
-			InvokeRepeating("DecreaseOil", 0.0f, 0.5f);
+			InvokeRepeating("DecreaseOil", 2.0f, 2.0f);
 			usingOil = true;
 		}
 
 		// Use Electricity
-		else if(Input.GetKey(KeyCode.S) && usingOil){
+		else if(Input.GetKeyDown(KeyCode.S) && usingOil){
 			CancelInvoke("DecreaseOil");
-			InvokeRepeating("DecreaseElectricity", 0.0f, 0.5f);
+			InvokeRepeating("DecreaseElectricity", 1.0f, 1.0f);
 			usingOil = false;
 		}
 
 		//Refill Electricity with Oil (Only when using Oil)
-		else if(Input.GetKey(KeyCode.D) && usingOil){
-			if(!transformOil){
-				InvokeRepeating("RefillElectricity", 0.0f, 0.5f);
-				transformOil = true;
-			}
-			else{
-				CancelInvoke("RefillElectricity");
-				transformOil = false;
-			}
+		else if(Input.GetKeyDown(KeyCode.D) && usingOil && !IsInvoking("RefillElectricity")){
+			InvokeRepeating("RefillElectricity", 2.0f, 2.0f);
+			FindObjectOfType<UIManager>().setBlinking(true);
+		}
+
+		//Stop electricity refill
+		else if(Input.GetKeyDown(KeyCode.D) && usingOil && IsInvoking("RefillElectricity")){
+			CancelInvoke("RefillElectricity");
+			FindObjectOfType<UIManager>().setBlinking(false);
 		}
 	}
 
 	void DecreaseOil(){
-		if(oil.value > 0){
-			oil.value -= 1;
+		if(oilValue > 0){
+			OilImage[oilValue].enabled = false;
+			oilValue -= 1;
 		}
 		else{
 			FindObjectOfType<UIManager>().GameOver();
@@ -56,17 +66,24 @@ public class EnergyController : MonoBehaviour {
 	}
 
 	public void RefillOil(){
-		if(oil.value < (maxOilValue - oilRefillValue)){
-			oil.value += oilRefillValue;
+		if(oilValue < (OilImage.Length - oilRefillValue - 1)){
+			for(int i = oilValue; i < oilValue + oilRefillValue + 1; i++){
+				OilImage[i].enabled = true;
+			}
+			oilValue += oilRefillValue;
 		}
 		else{
-			oil.value = maxOilValue;
+			for(int i = oilValue; i < OilImage.Length; i++){
+				OilImage[i].enabled = true;
+			}
+			oilValue = OilImage.Length - 1;
 		}
 	}
 
 	void DecreaseElectricity(){
-		if(electricity.value > 0){
-			electricity.value -= 2;
+		if(elecValue > 0){
+			ElecImage[elecValue].enabled = false;
+			elecValue -= 1;
 		}
 		else{
 			FindObjectOfType<UIManager>().GameOver();
@@ -74,10 +91,14 @@ public class EnergyController : MonoBehaviour {
 	}
 
 	void RefillElectricity(){
-		if(electricity.value < maxElectricityValue){
+		if(elecValue < ElecImage.Length - 1){
 			DecreaseOil();
 			DecreaseOil();
-			electricity.value += 1;
+			elecValue += 1;
+			ElecImage[elecValue].enabled = true;
+		}
+		else{
+			CancelInvoke("RefillElectricity");
 		}
 	}
 }
