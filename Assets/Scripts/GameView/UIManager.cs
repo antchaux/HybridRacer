@@ -7,27 +7,34 @@ using UnityEngine.EventSystems;
 using TMPro;
 public class UIManager : MonoBehaviour {
 
-	//public GameObject fuelLevel;
-	//public GameObject elecLevel;
-	bool gameHasEnded = false;
 	public float restartDelay = 1f;
-	public Text scoreText;
-	public TMPro.TextMeshProUGUI flashingText;
+	public TextMeshProUGUI scoreText;
+	public TextMeshProUGUI finalScoreText;
+	public TextMeshProUGUI menuScoreText;
+	public Button pauseButton;
+	public TextMeshProUGUI flashingText;
+	public Canvas[] canvas;
+
 	bool blink = false; //TODO : fix blinking
 	string tmpflashingText;
 	int score;
-
+	string scoreBaseText = "SCORE : ";
+	bool gameHasEnded = false;
 
 	void Start () {
-		//fuelLevel.SetActive(true);
 		score = 0;
-		InvokeRepeating("scoreUpdate", 1.0f, 0.5f);
 		tmpflashingText = flashingText.text;
+		foreach(Canvas canva in canvas){
+			if(canva.name == "CanvasGame") canva.gameObject.SetActive(true);
+			else canva.gameObject.SetActive(false);
+		}
+
+		InvokeRepeating("scoreUpdate", 1.0f, 0.5f);
 		StartCoroutine(BlinkText());
 	}
 
 	void Update () {
-		scoreText.text = "Score : " + score;
+		scoreText.text = scoreBaseText + score;
 	}
 
 	public void Pause(){
@@ -40,14 +47,17 @@ public class UIManager : MonoBehaviour {
 	}
 
 	public IEnumerator BlinkText(){
-		while(blink){
-			//set the Text's text to blank
-			flashingText.text= "";
-			//display blank text for 0.5 seconds
-			yield return new WaitForSeconds(.5f);
-			//display “I AM FLASHING TEXT” for the next 0.5 seconds
-			flashingText.text= tmpflashingText;
-			yield return new WaitForSeconds(.5f);
+		while(true){
+			if(blink){
+				Debug.Log("blink");
+				//set the Text's text to blank
+				flashingText.text= "";
+				//display blank text for 0.5 seconds
+				yield return new WaitForSeconds(.5f);
+				//display “I AM FLASHING TEXT” for the next 0.5 seconds
+				flashingText.text= tmpflashingText;
+				yield return new WaitForSeconds(.5f);
+			}
 		}
 	}
 
@@ -63,13 +73,45 @@ public class UIManager : MonoBehaviour {
 	public void GameOver(){
 		if(!gameHasEnded){
 			gameHasEnded = true;
-			Pause();
-			Debug.Log("GAME OVER");
-			//Invoke("Restart", restartDelay);
+			finalScoreText.text = scoreBaseText + score;
+
+			foreach(Canvas canva in canvas){
+				if(canva.name == "CanvasGameOver") canva.gameObject.SetActive(true);
+				else canva.gameObject.SetActive(false);
+			}
 		}
 	}
 
 	void Restart(){
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+	}
+
+	public void Menu(){
+		Time.timeScale = 0;
+		menuScoreText.text = scoreBaseText + " " + score;
+
+		foreach(Canvas canva in canvas){
+			if(canva.name == "CanvasPause") canva.gameObject.SetActive(true);
+			else canva.gameObject.SetActive(false);
+		}
+	}
+
+	public void Resume(){
+		Time.timeScale = 1;
+		foreach(Canvas canva in canvas){
+			if(canva.name == "CanvasPause") canva.gameObject.SetActive(false);
+		}
+	}
+
+	public void Play(){
+		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+	}
+
+	public void MainMenu(){
+		SceneManager.LoadScene("StartMenu");
+	}
+
+	public void Exit(){
+		Application.Quit();
 	}
 }

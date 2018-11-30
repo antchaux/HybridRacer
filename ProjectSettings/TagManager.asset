@@ -8,6 +8,9 @@ TagManager:
   - Oil
   - Player Car
   - Electricity
+  - CanvasGame
+  - CanvasPause
+  - CanvasGameOver
   layers:
   - Default
   - TransparentFX
@@ -18,7 +21,7 @@ TagManager:
   - 
   - 
   - PostProcessing
-  - 
+  - Background
   - 
   - 
   - 
@@ -44,4 +47,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 2360065945
     locked: 0

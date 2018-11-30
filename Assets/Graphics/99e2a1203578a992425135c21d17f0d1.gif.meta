@@ -1,10 +1,7 @@
 fileFormatVersion: 2
-guid: d5f65853ae0e1fa4baa10e79502ace15
+guid: 524ef068d0624d0409c4b3762b9ce6ff
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: Keyboard keys_0
-    21300002: Keyboard keys_1
-    21300004: Keyboard keys_2
+  fileIDToRecycleName: {}
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -43,7 +40,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -107,71 +104,11 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: Keyboard keys_0
-      rect:
-        serializedVersion: 2
-        x: 2
-        y: 73
-        width: 248
-        height: 58
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 11cc2003c622cdb43a1086cb79de6a1a
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Keyboard keys_1
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 36
-        width: 64
-        height: 30
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ed36b60868f383f42b16820c5e9cc751
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Keyboard keys_2
-      rect:
-        serializedVersion: 2
-        x: 2
-        y: 0
-        width: 248
-        height: 59
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9d9b5b44fdde2524b8d7c0efc6b3b5ce
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 73989e4c53e7a7047a5b604a68eafc5d
+    spriteID: 
     vertices: []
     indices: 
     edges: []

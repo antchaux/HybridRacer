@@ -30,35 +30,51 @@ public class EnergyController : MonoBehaviour {
 	void Update(){
 		// Use Oil
 		if(Input.GetKeyDown(KeyCode.A) && !usingOil){
-			CancelInvoke("DecreaseElectricity");
-			InvokeRepeating("DecreaseOil", 2.0f, 2.0f);
-			usingOil = true;
+			useOil();
 		}
 
 		// Use Electricity
 		else if(Input.GetKeyDown(KeyCode.S) && usingOil){
-			CancelInvoke("DecreaseOil");
-			InvokeRepeating("DecreaseElectricity", 1.0f, 1.0f);
-			usingOil = false;
+			useElec();
 		}
 
 		//Refill Electricity with Oil (Only when using Oil)
 		else if(Input.GetKeyDown(KeyCode.D) && usingOil && !IsInvoking("RefillElectricity")){
-			InvokeRepeating("RefillElectricity", 2.0f, 2.0f);
+			Debug.Log("start blinking");
 			FindObjectOfType<UIManager>().setBlinking(true);
+			InvokeRepeating("RefillElectricity", 2.0f, 2.0f);
 		}
 
 		//Stop electricity refill
 		else if(Input.GetKeyDown(KeyCode.D) && usingOil && IsInvoking("RefillElectricity")){
-			CancelInvoke("RefillElectricity");
 			FindObjectOfType<UIManager>().setBlinking(false);
+			CancelInvoke("RefillElectricity");
 		}
 	}
 
+	void useOil(){
+		CancelInvoke("DecreaseElectricity");
+		InvokeRepeating("DecreaseOil", 2.0f, 2.0f);
+		usingOil = true;
+	}
+
+	void useElec(){
+		if(IsInvoking("RefillElectricity")){
+			CancelInvoke("RefillElectricity");
+			FindObjectOfType<UIManager>().setBlinking(false);
+		}
+		CancelInvoke("DecreaseOil");
+		InvokeRepeating("DecreaseElectricity", 1.0f, 1.0f);
+		usingOil = false;
+	}
+
 	void DecreaseOil(){
+		OilImage[oilValue].enabled = false;
 		if(oilValue > 0){
-			OilImage[oilValue].enabled = false;
 			oilValue -= 1;
+		}
+		else if(elecValue > 0){
+			useElec();
 		}
 		else{
 			FindObjectOfType<UIManager>().GameOver();
@@ -81,8 +97,8 @@ public class EnergyController : MonoBehaviour {
 	}
 
 	void DecreaseElectricity(){
+		ElecImage[elecValue].enabled = false;
 		if(elecValue > 0){
-			ElecImage[elecValue].enabled = false;
 			elecValue -= 1;
 		}
 		else{
@@ -97,8 +113,19 @@ public class EnergyController : MonoBehaviour {
 			elecValue += 1;
 			ElecImage[elecValue].enabled = true;
 		}
+		else if(oilValue > 0){
+			useOil();
+		}
 		else{
 			CancelInvoke("RefillElectricity");
 		}
+	}
+
+	public int getOilValue(){
+		return oilValue;
+	}
+
+	public int getElecValue(){
+		return elecValue;
 	}
 }

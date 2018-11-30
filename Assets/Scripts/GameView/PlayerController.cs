@@ -39,7 +39,5 @@ public class PlayerController : MonoBehaviour {
 			Destroy(gameObject);
 			FindObjectOfType<UIManager>().GameOver();
 		}
-		/* else if(col.gameObject.tag == "Oil"){
-		}*/
 	}
 }
