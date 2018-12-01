@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObjectController : MonoBehaviour {
 
-	public float speed = 15f;
+	float speed = 20.0f;
 
 	void Start () {
 

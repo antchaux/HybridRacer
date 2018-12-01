@@ -45,7 +45,6 @@ public class UIManager : MonoBehaviour {
 
 	IEnumerator BlinkText(){
 		while(true){
-			Debug.Log("blink");
 			flashingText.gameObject.SetActive(true);
 			yield return new WaitForSeconds(.5f);
 			flashingText.gameObject.SetActive(false);

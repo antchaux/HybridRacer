@@ -19,10 +19,10 @@ public class ObjectSpawner : MonoBehaviour {
 	void Spawner(){
 		try{
 			int oilValue = FindObjectOfType<EnergyController>().getOilValue();
-			if(oilValue < 5) getObjectType(5);
-			else if(oilValue < 10) getObjectType(10);
-			else if(oilValue < 15) getObjectType(15);
-			else getObjectType(20);
+			if(oilValue < 5) getObjectType(10);
+			else if(oilValue < 10) getObjectType(20);
+			else if(oilValue < 15) getObjectType(30);
+			else getObjectType(40);
 		}
 		catch (Exception)
 		{
