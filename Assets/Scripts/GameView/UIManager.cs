@@ -14,23 +14,20 @@ public class UIManager : MonoBehaviour {
 	public Button pauseButton;
 	public TextMeshProUGUI flashingText;
 	public Canvas[] canvas;
-
-	bool blink = false; //TODO : fix blinking
-	string tmpflashingText;
+	public AudioManager audioManager;
 	int score;
 	string scoreBaseText = "SCORE : ";
 	bool gameHasEnded = false;
 
 	void Start () {
 		score = 0;
-		tmpflashingText = flashingText.text;
 		foreach(Canvas canva in canvas){
 			if(canva.name == "CanvasGame") canva.gameObject.SetActive(true);
 			else canva.gameObject.SetActive(false);
 		}
-
-		InvokeRepeating("scoreUpdate", 1.0f, 0.5f);
-		StartCoroutine(BlinkText());
+		flashingText.gameObject.SetActive(false);
+		InvokeRepeating("ScoreUpdate", 1.0f, 0.5f);
+		//StartCoroutine(BlinkText());
 	}
 
 	void Update () {
@@ -46,26 +43,22 @@ public class UIManager : MonoBehaviour {
 		}
 	}
 
-	public IEnumerator BlinkText(){
+	IEnumerator BlinkText(){
 		while(true){
-			if(blink){
-				Debug.Log("blink");
-				//set the Text's text to blank
-				flashingText.text= "";
-				//display blank text for 0.5 seconds
-				yield return new WaitForSeconds(.5f);
-				//display “I AM FLASHING TEXT” for the next 0.5 seconds
-				flashingText.text= tmpflashingText;
-				yield return new WaitForSeconds(.5f);
-			}
+			Debug.Log("blink");
+			flashingText.gameObject.SetActive(true);
+			yield return new WaitForSeconds(.5f);
+			flashingText.gameObject.SetActive(false);
+			yield return new WaitForSeconds(.5f);
 		}
 	}
 
-	public void setBlinking(bool toBlink){
-		blink = toBlink;
+	public void SetBlinking(bool toBlink){
+		if(toBlink) StartCoroutine("BlinkText");
+		else StopAllCoroutines();
 	}
 
-	void scoreUpdate(){
+	void ScoreUpdate(){
 		if(!gameHasEnded){
 			score += 1;
 		}
@@ -73,6 +66,7 @@ public class UIManager : MonoBehaviour {
 	public void GameOver(){
 		if(!gameHasEnded){
 			gameHasEnded = true;
+			audioManager.mainTheme.Play();
 			finalScoreText.text = scoreBaseText + score;
 
 			foreach(Canvas canva in canvas){
@@ -82,13 +76,11 @@ public class UIManager : MonoBehaviour {
 		}
 	}
 
-	void Restart(){
-		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-	}
-
 	public void Menu(){
 		Time.timeScale = 0;
 		menuScoreText.text = scoreBaseText + " " + score;
+		audioManager.carSound.Stop();
+		audioManager.mainTheme.Play();
 
 		foreach(Canvas canva in canvas){
 			if(canva.name == "CanvasPause") canva.gameObject.SetActive(true);
@@ -97,17 +89,22 @@ public class UIManager : MonoBehaviour {
 	}
 
 	public void Resume(){
+		audioManager.mainTheme.Stop();
+		audioManager.carSound.Play();
 		Time.timeScale = 1;
 		foreach(Canvas canva in canvas){
 			if(canva.name == "CanvasPause") canva.gameObject.SetActive(false);
+			if(canva.name == "CanvasGame") canva.gameObject.SetActive(true);
 		}
 	}
 
 	public void Play(){
+		audioManager.carSound.Stop();
 		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 	}
 
 	public void MainMenu(){
+		audioManager.carSound.Stop();
 		SceneManager.LoadScene("StartMenu");
 	}
 

@@ -24,7 +24,7 @@ public class ObjectSpawner : MonoBehaviour {
 			else if(oilValue < 15) getObjectType(15);
 			else getObjectType(20);
 		}
-		catch (Exception e)
+		catch (Exception)
 		{
 			getObjectType(-1);
 		}

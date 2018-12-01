@@ -11,6 +11,7 @@ public class EnergyController : MonoBehaviour {
 	public Image[] ElecImage;
 	//public int maxElectricityValue = 100;
 	public int oilRefillValue;
+	public AudioManager audioManager;
 	int oilValue;
 	int elecValue;
 	bool usingOil;
@@ -23,7 +24,6 @@ public class EnergyController : MonoBehaviour {
 		}
 
 		usingOil = true;
-
 		InvokeRepeating("DecreaseOil", 2.0f, 2.0f);
 	}
 
@@ -40,14 +40,13 @@ public class EnergyController : MonoBehaviour {
 
 		//Refill Electricity with Oil (Only when using Oil)
 		else if(Input.GetKeyDown(KeyCode.D) && usingOil && !IsInvoking("RefillElectricity")){
-			Debug.Log("start blinking");
-			FindObjectOfType<UIManager>().setBlinking(true);
+			FindObjectOfType<UIManager>().SetBlinking(true);
 			InvokeRepeating("RefillElectricity", 2.0f, 2.0f);
 		}
 
 		//Stop electricity refill
 		else if(Input.GetKeyDown(KeyCode.D) && usingOil && IsInvoking("RefillElectricity")){
-			FindObjectOfType<UIManager>().setBlinking(false);
+			FindObjectOfType<UIManager>().SetBlinking(false);
 			CancelInvoke("RefillElectricity");
 		}
 	}
@@ -61,7 +60,7 @@ public class EnergyController : MonoBehaviour {
 	void useElec(){
 		if(IsInvoking("RefillElectricity")){
 			CancelInvoke("RefillElectricity");
-			FindObjectOfType<UIManager>().setBlinking(false);
+			FindObjectOfType<UIManager>().SetBlinking(false);
 		}
 		CancelInvoke("DecreaseOil");
 		InvokeRepeating("DecreaseElectricity", 1.0f, 1.0f);
@@ -71,12 +70,11 @@ public class EnergyController : MonoBehaviour {
 	void DecreaseOil(){
 		OilImage[oilValue].enabled = false;
 		if(oilValue > 0){
+			if(oilValue < 3) audioManager.lowOil.Play();
 			oilValue -= 1;
 		}
-		else if(elecValue > 0){
-			useElec();
-		}
 		else{
+			audioManager.lowOil.Stop();
 			FindObjectOfType<UIManager>().GameOver();
 		}
 	}
@@ -94,6 +92,7 @@ public class EnergyController : MonoBehaviour {
 			}
 			oilValue = OilImage.Length - 1;
 		}
+		if(audioManager.lowOil.isPlaying && oilValue >=3) audioManager.lowOil.Stop();
 	}
 
 	void DecreaseElectricity(){
@@ -102,6 +101,7 @@ public class EnergyController : MonoBehaviour {
 			elecValue -= 1;
 		}
 		else{
+			if(audioManager.lowOil.isPlaying) audioManager.lowOil.Stop();
 			FindObjectOfType<UIManager>().GameOver();
 		}
 	}

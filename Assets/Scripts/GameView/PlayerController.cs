@@ -7,9 +7,11 @@ public class PlayerController : MonoBehaviour {
 	public float leftPosition = -1.7f;
 	public float rightPosition = 1.7f;
 	public float roadOffset = 0.7f;
+	public AudioManager audioManager;
 
 	void Start () {
 		rb = GetComponent<Rigidbody2D>();
+		audioManager.carSound.Play();
 	}
 
 	void Update(){
